@@ -1,0 +1,49 @@
+<div class="container">
+  <h2 class="text-center">PhotoManagement</h2>
+  <div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-8">
+      Name <input type="text"/>
+  <button class="btn btn-success">Search</button>
+  <button class="btn btn-success">Refresh</button>
+  </div>
+  </div>
+<table class="mat-table" width="100%">
+    <thead><th>Name</th>
+    <th>PhotoId</th>
+    <th>PhotoPath</th>
+    <th>PhotoService</th>
+    <th>Status</th>
+    </thead>
+    <tbody>
+@if (data$ | async; as data) {
+  @for (item of data.photoDTOs; track item) {
+    
+    <tr>
+      <td>{{ item.name }}</td>
+      <td>{{item.photoId}}</td>
+      <td>{{item.photoPath}}</td>
+      <td>{{item.photoService}}</td>
+      <td>{{item.status}}</td>
+    </tr>
+  }
+} @else {
+    <tr>
+        <td>Loading...</td>
+    </tr>
+}
+</tbody>
+</table>
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-8">
+<mat-paginator [length]="(data$ |async)?.totalRecords"
+[pageSize]="10"
+[pageSizeOptions]=[10,20,25,100]
+[pageIndex]="0"
+(page)="handlePageEvent($event)"
+aria-label="Select page"
+>
+</mat-paginator>
+</div>
+</div>
